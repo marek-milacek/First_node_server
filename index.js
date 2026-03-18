@@ -4,29 +4,48 @@ const fs = require("fs");
 const server = http.createServer((req, res) => {
     if (req.url === "/") {
         fs.readFile("./index.html", (err, data) => {
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(data);
             if (err) {
-                console.error("Průšvih, soubor neexistuje:", err);
+                console.error("Error: file does not exist:", err);
                 res.writeHead(500, { "Content-Type": "text/plain" });
-                res.end("Omlouvame se, neco se pokazilo na nasem serveru.");
+                res.end("Sorry, something went wrong on our server.");
                 return;
             }
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(data);
         });
     } else if (req.url === "/about") {
         fs.readFile("./about.html", (err, data) => {
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(data);
             if (err) {
-                console.error("Průšvih, soubor neexistuje:", err);
+                console.error("Error: file does not exist:", err);
                 res.writeHead(500, { "Content-Type": "text/plain" });
-                res.end("Omlouvame se, neco se pokazilo na nasem serveru.");
+                res.end("Sorry, something went wrong on our server.");
                 return;
             }
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(data);
+        });
+    } else if (req.url === "/contact-me") {
+        fs.readFile("./contact-me.html", (err, data) => {
+            if (err) {
+                console.error("Error: file does not exist:", err);
+                res.writeHead(500, { "Content-Type": "text/plain" });
+                res.end("Sorry, something went wrong on our server.");
+                return;
+            }
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(data);
         });
     } else {
-        res.writeHead(404, { "Content-Type": "text/html" });
-        res.end("<h1>Chyba 404: Stranka nenalezena</h1>");
+        fs.readFile("./404.html", (err, data) => {
+            if (err) {
+                console.error("Error: 404 file does not exist:", err);
+                res.writeHead(404, { "Content-Type": "text/html" });
+                res.end("<h1>404 - Page Not Found</h1>");
+                return;
+            }
+            res.writeHead(404, { "Content-Type": "text/html" });
+            res.end(data);
+        });
     }
 });
 
