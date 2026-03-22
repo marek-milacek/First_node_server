@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+require("dotenv").config();
 
 const server = http.createServer((req, res) => {
     if (req.url === "/") {
@@ -49,4 +50,8 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(8080);
+server.listen(process.env.PORT, () => {
+    console.log(
+        `Server is running on port http://localhost:${process.env.PORT}`,
+    );
+});
